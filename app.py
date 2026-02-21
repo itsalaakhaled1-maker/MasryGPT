@@ -9,7 +9,7 @@ st.markdown("""
 <style>
     .stApp { background-color: #1a1a1a; }
     .stButton>button {
-        background-color: #f59e0b; /* لون برتقالي ملكي */
+        background-color: #f59e0b;
         color: white; border-radius: 12px; border: none;
         padding: 12px 28px; font-weight: bold; transition: 0.3s;
     }
@@ -27,35 +27,34 @@ with col2:
     st.image("logo.png", use_container_width=True) 
 
 st.markdown("<h1 style='text-align: center;'>🥘 شيف العرب الذكي</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center; opacity: 0.8;'>أدخل المكونات المتوفرة لديك وسأقترح عليك أشهى الأطباق العربية</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; opacity: 0.8;'>أدخل المكونات وسأقترح عليك أشهى الأطباق العربية فوراً</h4>", unsafe_allow_html=True)
 
 st.divider()
 
-# حجز مكان الرد فوق مربع النص كما طلبت
 chat_box = st.empty()
 
-user_ingredients = st.text_input("ماذا يوجد في مطبخك اليوم؟ (مثلاً: دجاج، أرز، زبادي)")
+user_ingredients = st.text_input("ماذا يوجد في مطبخك؟", placeholder="مثلاً: فول، طماطم، بيض")
 
 if st.button("اقترح وصفات شهية 🚀"):
     if user_ingredients.strip() == "":
         st.warning("فضلاً، اكتب المكونات أولاً.")
     else:
         with chat_box.container():
-            with st.spinner("جاري البحث في مطابخنا العربية... 👨‍🍳"):
+            with st.spinner("جاري ابتكار وصفة سريعة... 🧑‍🍳"):
                 try:
-                    # الأوامر الجديدة: عربية واضحة وشاملة
-                    instruction = f"I have these ingredients: {user_ingredients}. Suggest 2 simple and delicious recipes from Arab cuisine (Saudi, Emirati, Egyptian, or Levantine). Reply in clear, modern Arabic language. Format the recipes with bullet points for steps. No English and no reasoning."
+                    # استخدمنا موديل p1 السريع والطلقة 🚀
+                    instruction = f"I have: {user_ingredients}. Suggest 2 simple Arab recipes. Reply in short Arabic. No English."
                     safe_prompt = urllib.parse.quote(instruction)
                     
-                    # موديل mistral هو الأفضل للردود المباشرة
-                    url = f"https://text.pollinations.ai/{safe_prompt}?model=mistral"
+                    # الرابط المحدث مع الموديل السريع
+                    url = f"https://text.pollinations.ai/{safe_prompt}?model=p1"
                     
-                    response = requests.get(url, timeout=30)
+                    response = requests.get(url, timeout=20)
                     
                     if response.status_code == 200:
-                        st.success("إليك هذه الاقتراحات:")
+                        st.success("وصفات الشيف السريعة:")
                         st.write(response.text)
                     else:
-                        st.error("السيرفر مشغول قليلاً، حاول مرة أخرى.")
+                        st.error("السيرفر لسه مزدحم، جرب تضغط مرة تانية الآن.")
                 except:
-                    st.error("يرجى التأكد من اتصال الإنترنت.")
+                    st.error("مشكلة في الاتصال، حاول مرة أخرى.")
