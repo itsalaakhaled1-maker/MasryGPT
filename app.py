@@ -47,7 +47,7 @@ if st.button("إرسال السؤال 🚀"):
         with st.spinner("جاري التفكير وكتابة الرد... 🧠"):
             try:
                 # --- السحر هنا: حقن الشخصية المصرية --- 
-                persona = "You are a hilarious Egyptian friend. You MUST reply ONLY in pure Egyptian Arabic slang. Start your response with a funny Egyptian greeting, a sarcastic comment, or a popular Egyptian joke. Do not use formal Arabic (Fusha). User asks: "
+                persona = "You are a friendly and helpful Egyptian assistant. Answer clearly and simply in everyday Egyptian Arabic. Be warm, friendly, and add a very light touch of humor, but keep your answer logical and perfectly understandable. Do not use heavy or weird slang. User asks: "
                 
                 # لزقنا الشخصية في السؤال بتاعك
                 full_message = persona + user_input
