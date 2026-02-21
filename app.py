@@ -2,18 +2,13 @@ import streamlit as st
 import requests
 import urllib.parse
 
-# 1. إعدادات الواجهة (يجب أن تكون أول سطر)
 st.set_page_config(page_title="العالم المصري", page_icon="🧠", layout="centered")
 
-# 2. إضافة الثيم المخصص (CSS) لتجميل التطبيق
 st.markdown("""
 <style>
-    /* تغيير لون الخلفية لتدرج لوني أنيق */
     .stApp {
         background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     }
-    
-    /* تجميل زر الإرسال */
     .stButton>button {
         background-color: #2e7bcf;
         color: white;
@@ -25,10 +20,8 @@ st.markdown("""
     }
     .stButton>button:hover {
         background-color: #1b5b9e;
-        transform: scale(1.05); /* حركة تكبير بسيطة عند وقوف الماوس */
+        transform: scale(1.05);
     }
-    
-    /* تجميل مربع النص */
     .stTextInput>div>div>input {
         border-radius: 12px;
         border: 2px solid #2e7bcf;
@@ -36,19 +29,15 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# 3. عرض الصورة فوق (في المنتصف)
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    # الصورة اللي هتتعرض (لازم نرفعها على جيت هاب برضه)
     st.image("logo.png", use_container_width=True) 
 
-# 4. العنوان الرئيسي والجملة الترحيبية (في المنتصف وبخطوط أكبر)
 st.markdown("<h1 style='text-align: center; color: #1e293b;'>مصري عارف كل حاجه 🧠</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center; color: #2e7bcf;'>اسألني في أي حاجة.. أنا متصل بسيرفر مصري صاروخي ومجاني!</h4>", unsafe_allow_html=True)
 
-st.divider() # خط فاصل أنيق
+st.divider() 
 
-# 5. مربع إدخال النص
 user_input = st.text_input("كيف يمكنني مساعدتك اليوم؟ (مثلاً: نصيحة سريعة للنجاح)")
 
 if st.button("إرسال السؤال 🚀"):
@@ -57,9 +46,13 @@ if st.button("إرسال السؤال 🚀"):
     else:
         with st.spinner("جاري التفكير وكتابة الرد... 🧠"):
             try:
-                # تشفير النص
-                safe_prompt = urllib.parse.quote(user_input)
-                # السيرفر المعتمد
+                # --- السحر هنا: حقن الشخصية المصرية ---
+                persona = "أنت مساعد ذكي مصري، دمك خفيف جداً. ردك دايماً لازم يكون باللهجة المصرية العامية 100%. ابدأ كلامك دايماً بإفيه أو تريقة خفيفة أو هزار، وبعدين جاوب على السؤال. ممنوع تتكلم لغة عربية فصحى نهائياً. إليك سؤال المستخدم: "
+                
+                # لزقنا الشخصية في السؤال بتاعك
+                full_message = persona + user_input
+                safe_prompt = urllib.parse.quote(full_message)
+                
                 url = f"https://text.pollinations.ai/{safe_prompt}"
                 
                 response = requests.get(url, timeout=30)
