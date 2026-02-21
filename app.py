@@ -67,7 +67,8 @@ if st.button("إرسال السؤال 🚀"):
             with st.spinner("جاري التفكير وكتابة الرد... 🧠"):
                 try:
                     # أوامر السيستم الصارمة عشان ميهلوسش
-                    system_prompt = "You are a normal Egyptian guy. Reply ONLY in everyday Egyptian Arabic. CRITICAL RULE: You MUST ONLY output standard Arabic letters. DO NOT output any English letters, symbols, HTML, or weird codes. Just clean Arabic text."
+                    # أمر سيستم هادي وبسيط عشان السيرفر ميتجننش
+                    system_prompt = "رد كأنك شاب مصري جدع وبسيط. استخدم عامية مصرية خفيفة جداً ومفهومة للكل. الرد لازم يكون قصير ومباشر وبدون أي مقدمات أو أكواد أو حروف إنجليزية."
                     
                     safe_system = urllib.parse.quote(system_prompt)
                     safe_prompt = urllib.parse.quote(user_input)
