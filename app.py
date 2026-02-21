@@ -1,5 +1,5 @@
 import streamlit as st
-import requests
+import requests 
 import urllib.parse
 
 st.set_page_config(page_title="العالم المصري", page_icon="🧠", layout="centered")
@@ -36,36 +36,39 @@ with col2:
 st.markdown("<h1 style='text-align: center; color: #1e293b;'>مصري عارف كل حاجه 🧠</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center; color: #2e7bcf;'>اسألني في أي حاجة.. أنا متصل بسيرفر مصري صاروخي ومجاني!</h4>", unsafe_allow_html=True)
 
-st.divider() 
+st.divider() # خط فاصل أنيق
 
+# --- الحيلة الذكية: حجز مكان فاضي للرد عشان يظهر فوق ---
+chat_box = st.empty()
+
+# مربع إدخال النص (بقى تحت المكان الفاضي)
 user_input = st.text_input("كيف يمكنني مساعدتك اليوم؟ (مثلاً: نصيحة سريعة للنجاح)")
 
 if st.button("إرسال السؤال 🚀"):
     if user_input.strip() == "":
         st.warning("الرجاء كتابة سؤالك أولاً.")
     else:
-        with st.spinner("جاري التفكير وكتابة الرد... 🧠"):
-            try:
-                                # غرفة العمليات السرية (شخصية الشات بوت مفصولة عن السؤال)
-                # أمر صارم جداً بعدم استخدام أي رموز أو حروف غير عربية
-                system_prompt = "You are a normal Egyptian guy. Reply ONLY in everyday Egyptian Arabic. CRITICAL RULE: You MUST ONLY output standard Arabic letters. DO NOT output any English letters, symbols, HTML, or weird codes. Just clean Arabic text."
-                
-                # تشفير الأوامر والسؤال كل واحد لوحده
-                safe_system = urllib.parse.quote(system_prompt)
-                safe_prompt = urllib.parse.quote(user_input)
-                
-                # الرابط الجديد اللي بيفهم الأوامر صح
-                url = f"https://text.pollinations.ai/{safe_prompt}?system={safe_system}"
-
-                response = requests.get(url, timeout=30)
-                
-                if response.status_code == 200:
-                    st.success("الرد:")
-                    st.write(response.text)
-                else:
-                    st.error("السيرفر بياخد نفسه، جرب تدوس إرسال كمان ثواني.")
+        # هنخلي التحميل والرد يظهروا جوه المكان الفاضي اللي حجزناه فوق
+        with chat_box.container():
+            with st.spinner("جاري التفكير وكتابة الرد... 🧠"):
+                try:
+                    # أوامر السيستم الصارمة عشان ميهلوسش
+                    system_prompt = "You are a normal Egyptian guy. Reply ONLY in everyday Egyptian Arabic. CRITICAL RULE: You MUST ONLY output standard Arabic letters. DO NOT output any English letters, symbols, HTML, or weird codes. Just clean Arabic text."
                     
-            except requests.exceptions.Timeout:
-                st.error("السيرفر خد وقت طويل، جرب مرة تانية.")
-            except Exception as e:
-                st.error("تأكد من اتصالك بالإنترنت.")
+                    safe_system = urllib.parse.quote(system_prompt)
+                    safe_prompt = urllib.parse.quote(user_input)
+                    
+                    url = f"https://text.pollinations.ai/{safe_prompt}?system={safe_system}"
+                    
+                    response = requests.get(url, timeout=30)
+                    
+                    if response.status_code == 200:
+                        st.success("الرد:")
+                        st.write(response.text)
+                    else:
+                        st.error("السيرفر بياخد نفسه، جرب تدوس إرسال كمان ثواني.")
+                        
+                except requests.exceptions.Timeout:
+                    st.error("السيرفر خد وقت طويل، جرب مرة تانية.")
+                except Exception as e:
+                    st.error("تأكد من اتصالك بالإنترنت.")
