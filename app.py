@@ -7,14 +7,11 @@ st.set_page_config(page_title="العالم المصري", page_icon="🧠", lay
 # --- بداية سحر الدارك مود ---
 st.markdown("""
 <style>
-    /* لون الخلفية أسود/رمادي غامق شيك زي شات جي بي تي */
     .stApp {
         background-color: #212121;
     }
-    
-    /* تجميل زر الإرسال */
     .stButton>button {
-        background-color: #3b82f6; /* أزرق هادي */
+        background-color: #3b82f6;
         color: white;
         border-radius: 12px;
         border: none;
@@ -26,16 +23,12 @@ st.markdown("""
         background-color: #2563eb;
         transform: scale(1.05);
     }
-    
-    /* تجميل مربع النص عشان يليق مع الأسود */
     .stTextInput>div>div>input {
-        background-color: #2f2f2f; /* خلفية المربع رمادي غامق */
-        color: white; /* لون الكتابة أبيض */
+        background-color: #2f2f2f;
+        color: white;
         border-radius: 12px;
         border: 1px solid #555;
     }
-    
-    /* تلوين النصوص العادية والرسائل عشان تظهر بوضوح */
     p, div, span, label {
         color: #e0e0e0 !important;
     }
@@ -46,34 +39,28 @@ col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     st.image("logo.png", use_container_width=True) 
 
-# غيرنا ألوان العناوين عشان تنور في الخلفية الغامقة
 st.markdown("<h1 style='text-align: center; color: #ffffff;'>مصري عارف كل حاجه 🧠</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center; color: #a0aec0;'>اسألني في أي حاجة.. أنا متصل بسيرفر مصري صاروخي ومجاني!</h4>", unsafe_allow_html=True)
 
-st.divider() # خط فاصل أنيق
+st.divider()
 
-# --- الحيلة الذكية: حجز مكان فاضي للرد عشان يظهر فوق ---
 chat_box = st.empty()
 
-# مربع إدخال النص (بقى تحت المكان الفاضي)
-user_input = st.text_input("كيف يمكنني مساعدتك اليوم؟ (مثلاً: نصيحة سريعة للنجاح)")
+user_input = st.text_input("كيف يمكنني مساعدتك اليوم؟")
 
 if st.button("إرسال السؤال 🚀"):
     if user_input.strip() == "":
         st.warning("الرجاء كتابة سؤالك أولاً.")
     else:
-        # هنخلي التحميل والرد يظهروا جوه المكان الفاضي اللي حجزناه فوق
         with chat_box.container():
-            with st.spinner("جاري التفكير وكتابة الرد... 🧠"):
+            with st.spinner("جاري التفكير... 🧠"):
                 try:
-                    # هنبسط الموضوع خالص ونحط الشخصية في نفس السؤال مباشرة
-                    # أوامر صارمة بالإنجليزي عشان ميتوهش بين اللهجات
-                    magic_prompt = f"You are a funny Egyptian guy. Reply STRICTLY in pure Egyptian Arabic slang. NEVER use Sudanese, Gulf, or formal Arabic. Keep it short and natural. User says: {user_input}"
-                    
+                    # أوامر صارمة ومختصرة جداً
+                    magic_prompt = f"Reply ONLY in funny Egyptian Arabic slang. Short and natural response to: {user_input}"
                     safe_prompt = urllib.parse.quote(magic_prompt)
                     
-                    # رابط بسيط جداً أجبرناه فيه يستخدم مخ OpenAI
-                    url = f"https://text.pollinations.ai/{safe_prompt}?model=openai"
+                    # استخدمنا موديل mistral عشان نلغي الرغي الإنجليزي
+                    url = f"https://text.pollinations.ai/{safe_prompt}?model=mistral"
                     
                     response = requests.get(url, timeout=30)
                     
@@ -81,9 +68,6 @@ if st.button("إرسال السؤال 🚀"):
                         st.success("الرد:")
                         st.write(response.text)
                     else:
-                        st.error("السيرفر بياخد نفسه، جرب تدوس إرسال كمان ثواني.")
-                        
-                except requests.exceptions.Timeout:
-                    st.error("السيرفر خد وقت طويل، جرب مرة تانية.")
-                except Exception as e:
+                        st.error("السيرفر مهنج ثواني، جرب تاني.")
+                except:
                     st.error("تأكد من اتصالك بالإنترنت.")
