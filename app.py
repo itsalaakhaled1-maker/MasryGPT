@@ -1,10 +1,10 @@
 import streamlit as st
 import requests
 import urllib.parse
+import random # عشان الرقم العشوائي
 
 st.set_page_config(page_title="شيف العرب الذكي", page_icon="🥘", layout="centered")
 
-# --- التنسيق الليلي الفخم ---
 st.markdown("""
 <style>
     .stApp { background-color: #1a1a1a; }
@@ -27,34 +27,33 @@ with col2:
     st.image("logo.png", use_container_width=True) 
 
 st.markdown("<h1 style='text-align: center;'>🥘 شيف العرب الذكي</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center; opacity: 0.8;'>أدخل المكونات وسأقترح عليك أشهى الأطباق العربية فوراً</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; opacity: 0.8;'>وصفات عربية سريعة ومضمونة</h4>", unsafe_allow_html=True)
 
 st.divider()
-
 chat_box = st.empty()
+user_ingredients = st.text_input("ماذا يوجد في مطبخك؟")
 
-user_ingredients = st.text_input("ماذا يوجد في مطبخك؟", placeholder="مثلاً: فول، طماطم، بيض")
-
-if st.button("اقترح وصفات شهية 🚀"):
+if st.button("اقترح وصفات 🚀"):
     if user_ingredients.strip() == "":
         st.warning("فضلاً، اكتب المكونات أولاً.")
     else:
         with chat_box.container():
-            with st.spinner("جاري ابتكار وصفة سريعة... 🧑‍🍳"):
+            with st.spinner("جاري الطبخ... 🧑‍🍳"):
                 try:
-                    # استخدمنا موديل p1 السريع والطلقة 🚀
-                    instruction = f"I have: {user_ingredients}. Suggest 2 simple Arab recipes. Reply in short Arabic. No English."
+                    # أوامر مختصرة جداً لسرعة الرد
+                    instruction = f"Suggest 2 simple recipes for: {user_ingredients}. Reply in Arabic only. Short bullet points."
                     safe_prompt = urllib.parse.quote(instruction)
                     
-                    # الرابط المحدث مع الموديل السريع
-                    url = f"https://text.pollinations.ai/{safe_prompt}?model=p1"
+                    # إضافة رقم عشوائي (seed) عشان يهرب من الزحمة
+                    seed = random.randint(1, 1000)
+                    url = f"https://text.pollinations.ai/{safe_prompt}?seed={seed}"
                     
-                    response = requests.get(url, timeout=20)
+                    response = requests.get(url, timeout=15)
                     
                     if response.status_code == 200:
-                        st.success("وصفات الشيف السريعة:")
+                        st.success("إليك الاقتراحات:")
                         st.write(response.text)
                     else:
-                        st.error("السيرفر لسه مزدحم، جرب تضغط مرة تانية الآن.")
+                        st.error("السيرفر لسه مضغوط، انتظر دقيقتين وجرب مرة أخيرة.")
                 except:
                     st.error("مشكلة في الاتصال، حاول مرة أخرى.")
