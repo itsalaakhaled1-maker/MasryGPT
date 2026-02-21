@@ -66,7 +66,6 @@ if st.button("إرسال السؤال 🚀"):
         with chat_box.container():
             with st.spinner("جاري التفكير وكتابة الرد... 🧠"):
                 try:
-                                    try:
                     # هنبسط الموضوع خالص ونحط الشخصية في نفس السؤال مباشرة
                     magic_prompt = f"رد كصديق مصري دمه خفيف بلهجة عامية طبيعية جداً ومفهومة، وبإجابة قصيرة ومباشرة على هذا الكلام: {user_input}"
                     
@@ -75,14 +74,6 @@ if st.button("إرسال السؤال 🚀"):
                     # رابط بسيط جداً أجبرناه فيه يستخدم مخ OpenAI
                     url = f"https://text.pollinations.ai/{safe_prompt}?model=openai"
                     
-                    response = requests.get(url, timeout=30)
-                    
-                    if response.status_code == 200:
-                        st.success("الرد:")
-                        st.write(response.text)
-                    else:
-                        st.error("السيرفر بياخد نفسه، جرب تدوس إرسال كمان ثواني.")
-
                     response = requests.get(url, timeout=30)
                     
                     if response.status_code == 200:
