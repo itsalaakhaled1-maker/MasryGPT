@@ -2,36 +2,23 @@ import streamlit as st
 import requests
 import urllib.parse
 
-st.set_page_config(page_title="العالم المصري", page_icon="🧠", layout="centered")
+st.set_page_config(page_title="شيف التلاجة الذكي", page_icon="🍳", layout="centered")
 
-# --- بداية سحر الدارك مود ---
+# --- تنسيق الدارك مود الفخم ---
 st.markdown("""
 <style>
-    .stApp {
-        background-color: #212121;
-    }
+    .stApp { background-color: #212121; }
     .stButton>button {
-        background-color: #3b82f6;
-        color: white;
-        border-radius: 12px;
-        border: none;
-        padding: 10px 24px;
-        font-weight: bold;
-        transition: 0.3s;
+        background-color: #ef4444; /* لون أحمر فاتح للشهية */
+        color: white; border-radius: 12px; border: none;
+        padding: 10px 24px; font-weight: bold; transition: 0.3s;
     }
-    .stButton>button:hover {
-        background-color: #2563eb;
-        transform: scale(1.05);
-    }
+    .stButton>button:hover { background-color: #dc2626; transform: scale(1.05); }
     .stTextInput>div>div>input {
-        background-color: #2f2f2f;
-        color: white;
-        border-radius: 12px;
-        border: 1px solid #555;
+        background-color: #2f2f2f; color: white;
+        border-radius: 12px; border: 1px solid #555;
     }
-    p, div, span, label {
-        color: #e0e0e0 !important;
-    }
+    p, div, span, label { color: #e0e0e0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -39,35 +26,36 @@ col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     st.image("logo.png", use_container_width=True) 
 
-st.markdown("<h1 style='text-align: center; color: #ffffff;'>مصري عارف كل حاجه 🧠</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center; color: #a0aec0;'>اسألني في أي حاجة.. أنا متصل بسيرفر مصري صاروخي ومجاني!</h4>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #ffffff;'>شيف التلاجة الذكي 🍳</h1>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; color: #a0aec0;'>اكتبلي المكونات اللي عندك.. وهقولك تطبخ إيه في ثواني!</h4>", unsafe_allow_html=True)
 
 st.divider()
 
+# حجز مكان الرد فوق
 chat_box = st.empty()
 
-user_input = st.text_input("كيف يمكنني مساعدتك اليوم؟")
+# مدخل البيانات
+user_ingredients = st.text_input("إيه المكونات اللي في تلاجتك؟ (مثلاً: بيض، طماطم، فلفل)")
 
-if st.button("إرسال السؤال 🚀"):
-    if user_input.strip() == "":
-        st.warning("الرجاء كتابة سؤالك أولاً.")
+if st.button("اقترح عليا أكلة 🚀"):
+    if user_ingredients.strip() == "":
+        st.warning("قولي بس عندك إيه في التلاجة الأول.")
     else:
         with chat_box.container():
-            with st.spinner("جاري التفكير... 🧠"):
+            with st.spinner("جاري ابتكار وصفة مصرية... 🧑‍🍳"):
                 try:
-                    # أوامر صارمة ومختصرة جداً
-                    magic_prompt = f"Reply ONLY in funny Egyptian Arabic slang. Short and natural response to: {user_input}"
-                    safe_prompt = urllib.parse.quote(magic_prompt)
+                    # أمر مخصص للمطبخ والموديل المستقر
+                    instruction = f"I have these ingredients: {user_ingredients}. Suggest 2 simple Egyptian recipes I can make. Reply ONLY in Egyptian Arabic slang. Keep it short and organized with bullet points. No English."
+                    safe_prompt = urllib.parse.quote(instruction)
                     
-                    # استخدمنا موديل mistral عشان نلغي الرغي الإنجليزي
                     url = f"https://text.pollinations.ai/{safe_prompt}?model=mistral"
                     
                     response = requests.get(url, timeout=30)
                     
                     if response.status_code == 200:
-                        st.success("الرد:")
+                        st.success("مقترحات الشيف:")
                         st.write(response.text)
                     else:
-                        st.error("السيرفر مهنج ثواني، جرب تاني.")
+                        st.error("السيرفر بياخد نفسه، جرب كمان ثانية.")
                 except:
                     st.error("تأكد من اتصالك بالإنترنت.")
