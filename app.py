@@ -46,15 +46,16 @@ if st.button("إرسال السؤال 🚀"):
     else:
         with st.spinner("جاري التفكير وكتابة الرد... 🧠"):
             try:
-                # --- السحر هنا: حقن الشخصية المصرية --- 
-                persona = "You are a friendly and helpful Egyptian assistant. Answer clearly and simply in everyday Egyptian Arabic. Be warm, friendly, and add a very light touch of humor, but keep your answer logical and perfectly understandable. Do not use heavy or weird slang. User asks: "
+                                # غرفة العمليات السرية (شخصية الشات بوت مفصولة عن السؤال)
+                system_prompt = "أنت شاب مصري جدع ودمك خفيف. ردك دايماً بلهجة مصرية عامية يومية بسيطة ومفهومة جداً، كأنك بتكلم صاحبك. خليك ودود وطبيعي وبدون أي كلمات غريبة أو أكواد."
                 
-                # لزقنا الشخصية في السؤال بتاعك
-                full_message = persona + user_input
-                safe_prompt = urllib.parse.quote(full_message)
+                # تشفير الأوامر والسؤال كل واحد لوحده
+                safe_system = urllib.parse.quote(system_prompt)
+                safe_prompt = urllib.parse.quote(user_input)
                 
-                url = f"https://text.pollinations.ai/{safe_prompt}"
-                
+                # الرابط الجديد اللي بيفهم الأوامر صح
+                url = f"https://text.pollinations.ai/{safe_prompt}?system={safe_system}"
+
                 response = requests.get(url, timeout=30)
                 
                 if response.status_code == 200:
