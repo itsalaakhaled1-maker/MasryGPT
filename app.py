@@ -1,16 +1,20 @@
 import streamlit as st
-import requests 
+import requests
 import urllib.parse
 
 st.set_page_config(page_title="العالم المصري", page_icon="🧠", layout="centered")
 
+# --- بداية سحر الدارك مود ---
 st.markdown("""
 <style>
+    /* لون الخلفية أسود/رمادي غامق شيك زي شات جي بي تي */
     .stApp {
-        background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background-color: #212121;
     }
+    
+    /* تجميل زر الإرسال */
     .stButton>button {
-        background-color: #2e7bcf;
+        background-color: #3b82f6; /* أزرق هادي */
         color: white;
         border-radius: 12px;
         border: none;
@@ -19,12 +23,21 @@ st.markdown("""
         transition: 0.3s;
     }
     .stButton>button:hover {
-        background-color: #1b5b9e;
+        background-color: #2563eb;
         transform: scale(1.05);
     }
+    
+    /* تجميل مربع النص عشان يليق مع الأسود */
     .stTextInput>div>div>input {
+        background-color: #2f2f2f; /* خلفية المربع رمادي غامق */
+        color: white; /* لون الكتابة أبيض */
         border-radius: 12px;
-        border: 2px solid #2e7bcf;
+        border: 1px solid #555;
+    }
+    
+    /* تلوين النصوص العادية والرسائل عشان تظهر بوضوح */
+    p, div, span, label {
+        color: #e0e0e0 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -33,8 +46,9 @@ col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     st.image("logo.png", use_container_width=True) 
 
-st.markdown("<h1 style='text-align: center; color: #1e293b;'>مصري عارف كل حاجه 🧠</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center; color: #2e7bcf;'>اسألني في أي حاجة.. أنا متصل بسيرفر مصري صاروخي ومجاني!</h4>", unsafe_allow_html=True)
+# غيرنا ألوان العناوين عشان تنور في الخلفية الغامقة
+st.markdown("<h1 style='text-align: center; color: #ffffff;'>مصري عارف كل حاجه 🧠</h1>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; color: #a0aec0;'>اسألني في أي حاجة.. أنا متصل بسيرفر مصري صاروخي ومجاني!</h4>", unsafe_allow_html=True)
 
 st.divider() # خط فاصل أنيق
 
