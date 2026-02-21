@@ -1,15 +1,17 @@
 import streamlit as st
 import requests
 import urllib.parse
-import random # عشان الرقم العشوائي
+import random
 
+# إعداد الصفحة بالاسم الجديد
 st.set_page_config(page_title="شيف العرب الذكي", page_icon="🥘", layout="centered")
 
+# التنسيق الليلي الفخم (Dark Mode)
 st.markdown("""
 <style>
     .stApp { background-color: #1a1a1a; }
     .stButton>button {
-        background-color: #f59e0b;
+        background-color: #f59e0b; /* لون برتقالي ملكي */
         color: white; border-radius: 12px; border: none;
         padding: 12px 28px; font-weight: bold; transition: 0.3s;
     }
@@ -22,38 +24,46 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# محاذاة اللوجو والعناوين
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    st.image("logo.png", use_container_width=True) 
+    # تأكد أن ملف logo.png موجود في المشروع على GitHub أو امسح هذا السطر
+    try:
+        st.image("logo.png", use_container_width=True)
+    except:
+        pass
 
 st.markdown("<h1 style='text-align: center;'>🥘 شيف العرب الذكي</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center; opacity: 0.8;'>وصفات عربية سريعة ومضمونة</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; opacity: 0.8;'>أدخل المكونات المتوفرة وسأعطيك وصفات عربية شهية</h4>", unsafe_allow_html=True)
 
 st.divider()
-chat_box = st.empty()
-user_ingredients = st.text_input("ماذا يوجد في مطبخك؟")
 
-if st.button("اقترح وصفات 🚀"):
+# حجز مكان الرد فوق مربع النص كما طلبت
+chat_box = st.empty()
+
+user_ingredients = st.text_input("ماذا يوجد في مطبخك؟", placeholder="مثلاً: دجاج، أرز، بصل")
+
+if st.button("اكتشف الوصفات 🚀"):
     if user_ingredients.strip() == "":
-        st.warning("فضلاً، اكتب المكونات أولاً.")
+        st.warning("يرجى كتابة بعض المكونات أولاً.")
     else:
         with chat_box.container():
-            with st.spinner("جاري الطبخ... 🧑‍🍳"):
+            with st.spinner("جاري ابتكار وصفاتك... 🧑‍🍳"):
                 try:
-                    # أوامر مختصرة جداً لسرعة الرد
-                    instruction = f"Suggest 2 simple recipes for: {user_ingredients}. Reply in Arabic only. Short bullet points."
-                    safe_prompt = urllib.parse.quote(instruction)
+                    # أوامر مختصرة لضمان السرعة وعدم التهنيج
+                    prompt = f"Ingredients: {user_ingredients}. Suggest 2 simple Arab recipes. Reply in Arabic. Short points."
+                    safe_prompt = urllib.parse.quote(prompt)
                     
-                    # إضافة رقم عشوائي (seed) عشان يهرب من الزحمة
+                    # استخدام seed عشوائي للهروب من ضغط السيرفر
                     seed = random.randint(1, 1000)
                     url = f"https://text.pollinations.ai/{safe_prompt}?seed={seed}"
                     
                     response = requests.get(url, timeout=15)
                     
                     if response.status_code == 200:
-                        st.success("إليك الاقتراحات:")
+                        st.success("إليك اقتراحات الشيف:")
                         st.write(response.text)
                     else:
-                        st.error("السيرفر لسه مضغوط، انتظر دقيقتين وجرب مرة أخيرة.")
+                        st.error("السيرفر مشغول، حاول مرة أخرى بعد قليل.")
                 except:
-                    st.error("مشكلة في الاتصال، حاول مرة أخرى.")
+                    st.error("تأكد من اتصالك بالإنترنت.")
