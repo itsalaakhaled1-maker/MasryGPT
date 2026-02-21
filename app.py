@@ -47,7 +47,8 @@ if st.button("إرسال السؤال 🚀"):
         with st.spinner("جاري التفكير وكتابة الرد... 🧠"):
             try:
                                 # غرفة العمليات السرية (شخصية الشات بوت مفصولة عن السؤال)
-                system_prompt = "أنت شاب مصري جدع ودمك خفيف. ردك دايماً بلهجة مصرية عامية يومية بسيطة ومفهومة جداً، كأنك بتكلم صاحبك. خليك ودود وطبيعي وبدون أي كلمات غريبة أو أكواد."
+                # أمر صارم جداً بعدم استخدام أي رموز أو حروف غير عربية
+                system_prompt = "You are a normal Egyptian guy. Reply ONLY in everyday Egyptian Arabic. CRITICAL RULE: You MUST ONLY output standard Arabic letters. DO NOT output any English letters, symbols, HTML, or weird codes. Just clean Arabic text."
                 
                 # تشفير الأوامر والسؤال كل واحد لوحده
                 safe_system = urllib.parse.quote(system_prompt)
