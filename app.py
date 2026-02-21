@@ -66,16 +66,23 @@ if st.button("إرسال السؤال 🚀"):
         with chat_box.container():
             with st.spinner("جاري التفكير وكتابة الرد... 🧠"):
                 try:
-                    # أوامر السيستم الصارمة عشان ميهلوسش
-                    # أمر سيستم هادي وبسيط عشان السيرفر ميتجننش
-                    system_prompt = "رد كأنك شاب مصري جدع وبسيط. استخدم عامية مصرية خفيفة جداً ومفهومة للكل. الرد لازم يكون قصير ومباشر وبدون أي مقدمات أو أكواد أو حروف إنجليزية."
+                                    try:
+                    # هنبسط الموضوع خالص ونحط الشخصية في نفس السؤال مباشرة
+                    magic_prompt = f"رد كصديق مصري دمه خفيف بلهجة عامية طبيعية جداً ومفهومة، وبإجابة قصيرة ومباشرة على هذا الكلام: {user_input}"
                     
-                    safe_system = urllib.parse.quote(system_prompt)
-                    safe_prompt = urllib.parse.quote(user_input)
+                    safe_prompt = urllib.parse.quote(magic_prompt)
                     
-                    # الرابط الجديد: أجبرنا السيرفر يستخدم مخ OpenAI الذكي
-                    url = f"https://text.pollinations.ai/{safe_prompt}?system={safe_system}&model=openai"
+                    # رابط بسيط جداً أجبرناه فيه يستخدم مخ OpenAI
+                    url = f"https://text.pollinations.ai/{safe_prompt}?model=openai"
                     
+                    response = requests.get(url, timeout=30)
+                    
+                    if response.status_code == 200:
+                        st.success("الرد:")
+                        st.write(response.text)
+                    else:
+                        st.error("السيرفر بياخد نفسه، جرب تدوس إرسال كمان ثواني.")
+
                     response = requests.get(url, timeout=30)
                     
                     if response.status_code == 200:
