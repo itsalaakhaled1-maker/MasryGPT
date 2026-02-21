@@ -67,7 +67,8 @@ if st.button("إرسال السؤال 🚀"):
             with st.spinner("جاري التفكير وكتابة الرد... 🧠"):
                 try:
                     # هنبسط الموضوع خالص ونحط الشخصية في نفس السؤال مباشرة
-                    magic_prompt = f"رد كصديق مصري دمه خفيف بلهجة عامية طبيعية جداً ومفهومة، وبإجابة قصيرة ومباشرة على هذا الكلام: {user_input}"
+                    # أوامر صارمة بالإنجليزي عشان ميتوهش بين اللهجات
+                    magic_prompt = f"You are a funny Egyptian guy. Reply STRICTLY in pure Egyptian Arabic slang. NEVER use Sudanese, Gulf, or formal Arabic. Keep it short and natural. User says: {user_input}"
                     
                     safe_prompt = urllib.parse.quote(magic_prompt)
                     
