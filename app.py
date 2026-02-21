@@ -73,7 +73,8 @@ if st.button("إرسال السؤال 🚀"):
                     safe_system = urllib.parse.quote(system_prompt)
                     safe_prompt = urllib.parse.quote(user_input)
                     
-                    url = f"https://text.pollinations.ai/{safe_prompt}?system={safe_system}"
+                    # الرابط الجديد: أجبرنا السيرفر يستخدم مخ OpenAI الذكي
+                    url = f"https://text.pollinations.ai/{safe_prompt}?system={safe_system}&model=openai"
                     
                     response = requests.get(url, timeout=30)
                     
