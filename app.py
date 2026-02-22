@@ -50,12 +50,10 @@ if st.button("اكتشف الوصفات 🚀"):
         with chat_box.container():
             with st.spinner("جاري ابتكار وصفاتك... 🧑‍🍳"):
                 try:
-                    # أوامر مختصرة لضمان السرعة وعدم التهنيج
-                    # ده السطر الجديد اللي هيخلي الشيف بيفهم في الأصول
+                    # السطر المحدث لضمان جودة الوصفات
                     instruction = f"Suggest 2 delicious Arab recipes for: {user_ingredients}. Use natural Arabic cooking terms (like 'نصفّي الفول' not 'وسادة مرطبة'). Keep titles unique and steps clear. Reply in Arabic only."
-                    safe_prompt = urllib.parse.quote(prompt)
+                    safe_prompt = urllib.parse.quote(instruction)
                     
-                    # استخدام seed عشوائي للهروب من ضغط السيرفر
                     seed = random.randint(1, 1000)
                     url = f"https://text.pollinations.ai/{safe_prompt}?seed={seed}"
                     
