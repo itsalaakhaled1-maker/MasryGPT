@@ -6,92 +6,91 @@ import re
 
 st.set_page_config(page_title="شيف العرب AI", page_icon="🧑‍🍳", layout="centered")
 
-# --- التنسيق الاحترافي (ChatGPT Style) مع مسافات أمان ---
+# --- تنسيق ChatGPT الاحترافي مع مسافات أمان كاملة ---
 st.markdown("""
 <style>
     .main .block-container { max-width: 800px; padding: 2rem; }
     .stApp { background-color: #1e1e1e; direction: rtl; }
     
-    .ai-response {
+    /* فقاعة الرد: ChatGPT Style */
+    .ai-bubble {
         background-color: #2d2d2d;
         border: 1px solid #444;
         border-radius: 15px;
-        padding: 30px;
-        margin-bottom: 20px;
+        padding: 25px 35px;
+        margin-top: 20px;
         color: #e0e0e0;
         line-height: 1.8;
         text-align: right;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-
-    /* تظبيط القوائم عشان متتحشرش في اليمين */
-    .ai-response ul, .ai-response ol {
-        padding-right: 45px !important;
-        margin-top: 10px;
-        list-style-position: outside !important;
+    
+    .ai-bubble h2, .ai-bubble h3 { color: #f59e0b; margin-bottom: 15px; }
+    
+    /* تظبيط القوائم عشان النقط متبقاش لازقة في الطرف */
+    .ai-bubble ul, .ai-bubble ol {
+        padding-right: 35px !important;
+        direction: rtl !important;
     }
 
     .stTextInput>div>div>input {
-        background-color: #2d2d2d; color: white; border-radius: 10px; padding: 12px;
+        background-color: #2d2d2d; color: white; border-radius: 10px; border: 1px solid #555;
     }
 
     .stButton>button {
-        width: 100%; background-color: #f59e0b; color: white; border-radius: 10px; font-weight: bold; height: 3.5em;
+        width: 100%; background-color: #f59e0b; color: white; border-radius: 10px; font-weight: bold; height: 3.5em; border: none;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# الهيدر واللوجو (ثبتنا الصورة)
+# الهيدر (صورة المعلم اللي بتدي هيبة)
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     try:
+        # تأكد إن ملف logo.png موجود بنفس الاسم ده على GitHub
         st.image("logo.png", use_container_width=True)
     except:
-        st.markdown("<h1 style='text-align:center;'>🧑‍🍳🥘</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align:center;'>👨‍🍳</h1>", unsafe_allow_html=True)
 
-st.markdown("<h1 style='text-align: center; color: white;'>🥘 شيف العرب الذكي</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: white;'>🧑‍🍳 شيف العرب الذكي</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #aaa; font-style: italic;'>'وصفات أصيلة.. لا هيروغليفي ولا فروديت' 😂</p>", unsafe_allow_html=True)
 st.divider()
 
+# مكان عرض الرد
 chat_placeholder = st.empty()
-user_input = st.text_input("ماذا يوجد في مطبخك؟", placeholder="مثلاً: بيض، جبنة، طماطم...")
+
+user_input = st.text_input("ماذا يوجد في مطبخك؟", placeholder="مثلاً: بيض، جبنة، فول...")
 
 if st.button("اكتشف الوصفات 🚀"):
     if not user_input.strip():
         st.warning("فضلاً، اكتب المكونات أولاً.")
     else:
         with chat_placeholder.container():
-            with st.spinner("جاري تنظيف الرد من الهيروغليفي... 🪄"):
+            with st.spinner("جاري تنظيف الرد وتجهيز الأكلة... 🪄"):
                 try:
-                    # أمر صارم جداً لمنع الرغي الإنجليزي
-                    prompt = f"Recipes for {user_input}. Reply ONLY in Arabic text. No JSON. No reasoning."
+                    prompt = f"Recipes for {user_input}. Reply ONLY in Arabic. No JSON. No reasoning."
                     safe_prompt = urllib.parse.quote(prompt)
                     url = f"https://text.pollinations.ai/{safe_prompt}?model=openai&seed={random.randint(1,9999)}"
                     
-                    response = requests.get(url, timeout=20)
+                    response = requests.get(url, timeout=25)
                     
                     if response.status_code == 200:
-                        raw_text = response.text
+                        res_text = response.text
                         
-                        # --- سحر الفلترة الجراحية ---
-                        # لو الرد فيه كود (JSON) هنسحب منه النص العربي بس
-                        if 'content":"' in raw_text:
-                            # محاولة استخراج الكلام اللي بين "content":" و "
-                            matches = re.findall(r'"content":"(.*?)"', raw_text, re.DOTALL)
+                        # تنظيف الرد لو السيرفر استهبل وبعت JSON
+                        if 'content":"' in res_text:
+                            matches = re.findall(r'"content":"(.*?)"', res_text, re.DOTALL)
                             if matches:
-                                # فك شفرات الـ Unicode زي \n و \u
-                                clean_text = matches[-1].encode().decode('unicode_escape')
-                            else:
-                                clean_text = raw_text
-                        else:
-                            clean_text = raw_text
+                                res_text = matches[-1].encode().decode('unicode_escape')
                         
-                        # مسح أي بقايا كود إنجليزي لسه موجودة
-                        clean_text = re.sub(r'\{.*\}', '', clean_text, flags=re.DOTALL)
-                        clean_text = clean_text.replace('reasoning_content', '').replace('assistant', '').replace('role', '')
+                        # مسح أي بقايا كود إنجليزي
+                        res_text = re.sub(r'\{.*\}', '', res_text, flags=re.DOTALL)
+                        res_text = res_text.replace('reasoning_content', '').replace('assistant', '')
 
-                        st.markdown(f'<div class="ai-response">{clean_text.strip()}</div>', unsafe_allow_html=True)
+                        # العرض النهائي الشيك
+                        st.markdown(f'<div class="ai-bubble">{res_text.strip()}</div>', unsafe_allow_html=True)
                         st.balloons()
                     else:
-                        st.error("السيرفر لسه معاند.. جرب تضغط تاني الآن.")
+                        st.error("السيرفر زحمة.. جرب تضغط تاني.")
                 except:
-                    st.error("تأكد من اتصالك بالإنترنت.")
+                    st.error("مشكلة في الإنترنت.")
