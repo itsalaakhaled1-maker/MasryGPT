@@ -6,7 +6,6 @@ import re
 
 st.set_page_config(page_title="شيف العرب الذكي", page_icon="🥘", layout="centered")
 
-# --- التنسيق العربي الـ RTL والدارك مود ---
 st.markdown("""
 <style>
     [data-testid="stAppViewContainer"] { direction: rtl; text-align: right; background-color: #1a1a1a; }
@@ -17,48 +16,34 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# اللوجو
-col1, col2, col3 = st.columns([1, 2, 1])
-with col2:
-    try:
-        st.image("logo.png", use_container_width=True)
-    except:
-        st.markdown("<h1 style='text-align:center;'>👨‍🍳🥘</h1>", unsafe_allow_html=True)
-
 st.markdown("<h1 style='text-align: center;'>🥘 شيف العرب الذكي</h1>", unsafe_allow_html=True)
 st.divider()
 
 chat_box = st.empty()
-user_input = st.text_input("ماذا يوجد في مطبخك؟", placeholder="مثلاً: دجاج، أرز، بصل")
+user_input = st.text_input("ماذا يوجد في مطبخك؟")
 
 if st.button("اكتشف الوصفات 🚀"):
     if user_input.strip() == "":
         st.warning("فضلاً، اكتب المكونات أولاً.")
     else:
         with chat_box.container():
-            with st.spinner("جاري ترويض السيرفر واستخراج الوصفة... 🧑‍🍳"):
+            with st.spinner("جاري محاولة الاتصال بالشيف... 🧑‍🍳"):
                 try:
-                    # طلب مباشر وصريح
-                    prompt = f"Recipes for {user_input}. Reply ONLY in Arabic. No reasoning. No JSON."
+                    prompt = f"Recipes for {user_input}. Reply in Arabic. Bullet points only."
                     safe_prompt = urllib.parse.quote(prompt)
-                    seed = random.randint(1, 10000)
+                    seed = random.randint(1, 1000)
                     
-                    # موديل mistral عشان نهرب من حوار الـ Reasoning
-                    url = f"https://text.pollinations.ai/{safe_prompt}?seed={seed}&model=mistral"
+                    # موديل unity.. خفيف ومحدش بيستخدمه كتير
+                    url = f"https://text.pollinations.ai/{safe_prompt}?seed={seed}&model=unity"
                     
-                    response = requests.get(url, timeout=25)
+                    response = requests.get(url, timeout=20)
                     
                     if response.status_code == 200:
-                        res_text = response.text
-                        
-                        # تنظيف النص من أي فضلات JSON أو إنجليزي
-                        res_text = re.sub(r'\{.*\}', '', res_text, flags=re.DOTALL)
-                        res_text = res_text.replace('reasoning_content', '').replace('assistant', '')
-                        
-                        st.markdown(res_text.strip())
+                        # تنظيف أي كود برمجي JSON يظهر في الرد
+                        clean_text = re.sub(r'\{.*\}', '', response.text, flags=re.DOTALL)
+                        st.markdown(clean_text.strip())
                         st.balloons()
                     else:
-                        # التصحيح: استخدمنا ' ' بره و " " جوه عشان ميعملش SyntaxError
-                        st.error('السيرفر لسه "ابن كلب" ومشغول 😂.. جرب تضغط تاني الآن.')
+                        st.error("السيرفر لسه مضغوط.. انتظر دقيقة وجرب مرة أخيرة.")
                 except:
-                    st.error("تأكد من اتصالك بالإنترنت.")
+                    st.error("مشكلة في الإنترنت عندك.")
