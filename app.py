@@ -161,3 +161,9 @@ if st.button("أبهِر حماتك بالطبخة! 😉🥘"):
                         st.error("السيرفر زحمة.. جرب تضغط تاني.")
                 except:
                     st.error("مشكلة في الإنترنت.")
+    /* إخفاء الشريط الأحمر والفوتر نهائياً */
+    footer {display: none !important;}
+    [data-testid="stFooter"] {display: none !important;}
+    .st-emotion-cache-kn964b {display: none !important;} /* كود الموبايل الخاص */
+
+
