@@ -38,29 +38,27 @@ if st.button("اكتشف الوصفات 🚀"):
         with chat_box.container():
             with st.spinner("جاري ترويض السيرفر واستخراج الوصفة... 🧑‍🍳"):
                 try:
-                    # نستخدم موديل searchgpt لأنه الأكثر هدوءاً واستقراراً
-                    prompt = f"Recipes for {user_input}. Reply ONLY in Arabic text. Use bullet points."
+                    # طلب مباشر وصريح
+                    prompt = f"Recipes for {user_input}. Reply ONLY in Arabic. No reasoning. No JSON."
                     safe_prompt = urllib.parse.quote(prompt)
                     seed = random.randint(1, 10000)
-                    url = f"https://text.pollinations.ai/{safe_prompt}?seed={seed}&model=searchgpt"
+                    
+                    # موديل mistral عشان نهرب من حوار الـ Reasoning
+                    url = f"https://text.pollinations.ai/{safe_prompt}?seed={seed}&model=mistral"
                     
                     response = requests.get(url, timeout=25)
                     
                     if response.status_code == 200:
                         res_text = response.text
                         
-                        # --- تنظيف جراحي لمنع "الهيروغليفي" ---
-                        # مسح أي JSON أو Reasoning Content
+                        # تنظيف النص من أي فضلات JSON أو إنجليزي
                         res_text = re.sub(r'\{.*\}', '', res_text, flags=re.DOTALL)
-                        res_text = res_text.replace('reasoning_content', '').replace('assistant', '').replace('role', '').replace('content', '')
+                        res_text = res_text.replace('reasoning_content', '').replace('assistant', '')
                         
-                        # لو الرد لسه فيه بقايا إنجليزي أو أقواس
-                        clean_text = res_text.strip().strip('"').strip("'")
-                        
-                        st.markdown(clean_text)
+                        st.markdown(res_text.strip())
                         st.balloons()
                     else:
-                        # تم إصلاح علامات التنصيص هنا عشان ميعملش SyntaxError
+                        # التصحيح: استخدمنا ' ' بره و " " جوه عشان ميعملش SyntaxError
                         st.error('السيرفر لسه "ابن كلب" ومشغول 😂.. جرب تضغط تاني الآن.')
                 except:
                     st.error("تأكد من اتصالك بالإنترنت.")
