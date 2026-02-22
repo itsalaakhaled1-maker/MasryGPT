@@ -50,8 +50,14 @@ if st.button("اكتشف الوصفات 🚀"):
         with chat_box.container():
             with st.spinner("جاري ابتكار وصفاتك... 🧑‍🍳"):
                 try:
-                    # السطر المحدث لضمان جودة الوصفات
-                    instruction = f"Suggest 2 delicious Arab recipes for: {user_ingredients}. Use natural Arabic cooking terms (like 'نصفّي الفول' not 'وسادة مرطبة'). Keep titles unique and steps clear. Reply in Arabic only."
+                    # الأمر المحدث: دقة متناهية ومنع الرغي الزيادة
+                    instruction = (
+                        f"Suggest 2 professional Arab recipes for: {user_ingredients}. "
+                        "Rules: 1. Use clear Arabic culinary terms. "
+                        "2. NO poetic descriptions or marketing fluff. "
+                        "3. Use exactly these headers: '### 🥘 اسم الوصفة', '#### 🛒 المقادير', '#### 👨‍🍳 طريقة التحضير', '#### ✨ سر الشيف'. "
+                        "4. Reply in Arabic only."
+                    )
                     safe_prompt = urllib.parse.quote(instruction)
                     
                     seed = random.randint(1, 1000)
@@ -60,9 +66,11 @@ if st.button("اكتشف الوصفات 🚀"):
                     response = requests.get(url, timeout=15)
                     
                     if response.status_code == 200:
-                        st.success("إليك اقتراحات الشيف:")
-                        st.write(response.text)
+                        # تنسيق الرد داخل "بلوك" شيك
+                        st.markdown("---")
+                        st.markdown(response.text)
+                        st.balloons() # حركة احتفالية لما الوصفة تطلع
                     else:
-                        st.error("السيرفر مشغول، حاول مرة أخرى بعد قليل.")
+                        st.error("السيرفر مشغول، حاول مرة أخرى.")
                 except:
                     st.error("تأكد من اتصالك بالإنترنت.")
