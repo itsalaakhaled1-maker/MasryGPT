@@ -51,7 +51,8 @@ if st.button("اكتشف الوصفات 🚀"):
             with st.spinner("جاري ابتكار وصفاتك... 🧑‍🍳"):
                 try:
                     # أوامر مختصرة لضمان السرعة وعدم التهنيج
-                    prompt = f"Ingredients: {user_ingredients}. Suggest 2 simple Arab recipes. Reply in Arabic. Short points."
+                    # ده السطر الجديد اللي هيخلي الشيف بيفهم في الأصول
+                    instruction = f"Suggest 2 delicious Arab recipes for: {user_ingredients}. Use natural Arabic cooking terms (like 'نصفّي الفول' not 'وسادة مرطبة'). Keep titles unique and steps clear. Reply in Arabic only."
                     safe_prompt = urllib.parse.quote(prompt)
                     
                     # استخدام seed عشوائي للهروب من ضغط السيرفر
