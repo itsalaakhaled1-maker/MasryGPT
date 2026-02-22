@@ -78,22 +78,28 @@ st.markdown("""
         transform: scale(0.95); /* ينضغط لجوه */
     }
 
-    /* --- مسح شامل لكل الزوائد المزعجة --- */
+        /* إخفاء شامل وجذري لكل عناصر التحكم والزوائد */
     
-    /* إخفاء الهيدر والفوتر والمنيو تماماً */
-    header {display: none !important;}
-    footer {display: none !important;}
-    #MainMenu {display: none !important;}
+    /* 1. إخفاء الشريط العلوي (الهيدر) */
+    header, [data-testid="stHeader"] {display: none !important;}
     
-    /* إخفاء زرار Manage app والأيقونات اللي جنبه */
-    .stAppDeployButton {display: none !important;}
+    /* 2. إخفاء الفوتر (الشريط الأحمر والكلمات اللي تحت) */
+    footer, [data-testid="stFooter"] {display: none !important;}
+    
+    /* 3. إخفاء المنيو (التلات نقط) */
+    #MainMenu, [data-testid="stMainMenu"] {display: none !important;}
+    
+    /* 4. إخفاء زرار Deploy و Manage app تماماً */
+    .stAppDeployButton, [data-testid="stAppDeployButton"] {display: none !important;}
     [data-testid="stToolbar"] {display: none !important;}
-    [data-testid="stDecoration"] {display: none !important;}
-    [data-testid="stStatusWidget"] {display: none !important;}
     
-    /* إخفاء أي شريط أدوات إضافي بيظهر تحت */
+    /* 5. إخفاء أي شريط أدوات يظهر في الموبايل أو الكمبيوتر */
+    section[data-testid="stSidebar"] + div {display: none !important;}
     .stAppToolbar {display: none !important;}
-    footer {display: none !important;}
+    
+    /* 6. حركة إضافية لمسح أي مساحة فاضية بيسيبها الفوتر */
+    .stApp > footer { display: none !important; }
+    .stApp > header { display: none !important; }
 
 </style>
 """, unsafe_allow_html=True)
