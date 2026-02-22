@@ -53,7 +53,7 @@ with col2:
         st.markdown("<h1 style='text-align:center;'>👨‍🍳</h1>", unsafe_allow_html=True)
 
 st.markdown("<h1 style='text-align: center; color: white;'>🧑‍🍳 شيف العرب الذكي</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #aaa; font-style: italic;'>'وصفات أصيلة.. لا هيروغليفي ولا فروديت' 😂</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #f59e0b; font-size: 1.1rem; font-weight: bold; font-style: italic;'>أشطر من حماتك في المطبخ.. ومن غير تدخل في شؤونك الخاصة 😉🥘</p>", unsafe_allow_html=True)
 st.divider()
 
 # مكان عرض الرد
