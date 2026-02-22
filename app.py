@@ -78,11 +78,12 @@ st.markdown("""
         transform: scale(0.95); /* ينضغط لجوه */
     }
 
-        /* إخفاء قائمة المطورين والفوتر المزعج */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;} /* وده عشان يخفي الشريط اللي فوق لو ظهر */
-    .stAppDeployButton {display: none;} /* وده عشان يخفي زرار Manage App تحديداً */
+    /* إخفاء شامل لكل عناصر تحكم المطورين والفوتر */
+    header {display: none !important;}
+    footer {display: none !important;}
+    #MainMenu {display: none !important;}
+    .stAppDeployButton {display: none !important;}
+    [data-testid="stStatusWidget"] {display: none !important;}
 
 </style>
 """, unsafe_allow_html=True)
