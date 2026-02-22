@@ -78,28 +78,27 @@ st.markdown("""
         transform: scale(0.95); /* ينضغط لجوه */
     }
 
-        /* إخفاء شامل وجذري لكل عناصر التحكم والزوائد */
+    /* --- الضربة القاضية لكل زوائد Streamlit المزعجة --- */
     
-    /* 1. إخفاء الشريط العلوي (الهيدر) */
-    header, [data-testid="stHeader"] {display: none !important;}
-    
-    /* 2. إخفاء الفوتر (الشريط الأحمر والكلمات اللي تحت) */
-    footer, [data-testid="stFooter"] {display: none !important;}
-    
-    /* 3. إخفاء المنيو (التلات نقط) */
-    #MainMenu, [data-testid="stMainMenu"] {display: none !important;}
-    
-    /* 4. إخفاء زرار Deploy و Manage app تماماً */
-    .stAppDeployButton, [data-testid="stAppDeployButton"] {display: none !important;}
-    [data-testid="stToolbar"] {display: none !important;}
-    
-    /* 5. إخفاء أي شريط أدوات يظهر في الموبايل أو الكمبيوتر */
-    section[data-testid="stSidebar"] + div {display: none !important;}
-    .stAppToolbar {display: none !important;}
-    
-    /* 6. حركة إضافية لمسح أي مساحة فاضية بيسيبها الفوتر */
-    .stApp > footer { display: none !important; }
+    /* 1. إخفاء الهيدر (الشريط العلوي) تماماً */
+    header, [data-testid="stHeader"] {
+        display: none !important;
+    }
+
+    /* 2. إخفاء الفوتر (الشريط الأحمر "Hosted with Streamlit") */
+    footer, [data-testid="stFooter"], .st-emotion-cache-kn964b {
+        display: none !important;
+        height: 0px !important;
+    }
+
+    /* 3. إخفاء شريط الأدوات بالكامل (الزرار الأحمر وأيقونة المطور) */
+    [data-testid="stToolbar"], .stAppToolbar, .stAppDeployButton {
+        display: none !important;
+    }
+
+    /* 4. إخفاء أي مساحات فاضية بيسيبها الشريط الممسوح */
     .stApp > header { display: none !important; }
+    .main .block-container { padding-bottom: 0px !important; }
 
 </style>
 """, unsafe_allow_html=True)
