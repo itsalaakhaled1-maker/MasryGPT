@@ -2,12 +2,11 @@ import streamlit as st
 import requests
 import urllib.parse
 import random
-import json # عشان نفك شفرة الهيروغليفي لو ظهرت
 import re
 
 st.set_page_config(page_title="شيف العرب الذكي", page_icon="🥘", layout="centered")
 
-# --- تنسيق RTL "عنيف" بيجبر المتصفح يقلب كل حاجة ---
+# --- التنسيق العربي الـ RTL والدارك مود ---
 st.markdown("""
 <style>
     [data-testid="stAppViewContainer"] { direction: rtl; text-align: right; background-color: #1a1a1a; }
@@ -18,7 +17,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# اللوجو (مع محاولة تثبيت ظهوره)
+# اللوجو
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     try:
@@ -39,34 +38,29 @@ if st.button("اكتشف الوصفات 🚀"):
         with chat_box.container():
             with st.spinner("جاري ترويض السيرفر واستخراج الوصفة... 🧑‍🍳"):
                 try:
-                    # أمر صارم جداً
-                    prompt = f"Recipes for {user_input}. Reply ONLY in Arabic text. No JSON."
+                    # نستخدم موديل searchgpt لأنه الأكثر هدوءاً واستقراراً
+                    prompt = f"Recipes for {user_input}. Reply ONLY in Arabic text. Use bullet points."
                     safe_prompt = urllib.parse.quote(prompt)
                     seed = random.randint(1, 10000)
+                    url = f"https://text.pollinations.ai/{safe_prompt}?seed={seed}&model=searchgpt"
                     
-                    # نستخدم الموديل الخام بدون تحديد لتقليل الأخطاء
-                    url = f"https://text.pollinations.ai/{safe_prompt}?seed={seed}"
-                    
-                    response = requests.get(url, timeout=20)
+                    response = requests.get(url, timeout=25)
                     
                     if response.status_code == 200:
-                        raw_data = response.text
-                        final_text = ""
+                        res_text = response.text
                         
-                        # --- مرحلة "فك الشفرة" الجراحية ---
-                        try:
-                            # لو السيرفر بعت JSON (الهيروغليفي) هنحاول نفكه
-                            data = json.loads(raw_data)
-                            final_text = data.get('content', raw_data)
-                        except:
-                            # لو مش JSON، هننضف النص يدوياً من أي فضلات إنجليزية
-                            final_text = re.sub(r'\{.*?\}', '', raw_data, flags=re.DOTALL)
-                            final_text = final_text.replace('reasoning_content', '').replace('assistant', '')
-
-                        # عرض النص النهائي بضمان الـ RTL
-                        st.markdown(f'<div style="direction: rtl; text-align: right;">{final_text}</div>', unsafe_allow_html=True)
+                        # --- تنظيف جراحي لمنع "الهيروغليفي" ---
+                        # مسح أي JSON أو Reasoning Content
+                        res_text = re.sub(r'\{.*\}', '', res_text, flags=re.DOTALL)
+                        res_text = res_text.replace('reasoning_content', '').replace('assistant', '').replace('role', '').replace('content', '')
+                        
+                        # لو الرد لسه فيه بقايا إنجليزي أو أقواس
+                        clean_text = res_text.strip().strip('"').strip("'")
+                        
+                        st.markdown(clean_text)
                         st.balloons()
                     else:
-                        st.error("السيرفر لسه "ابن كلب" ومشغول 😂.. جرب تضغط تاني.")
+                        # تم إصلاح علامات التنصيص هنا عشان ميعملش SyntaxError
+                        st.error('السيرفر لسه "ابن كلب" ومشغول 😂.. جرب تضغط تاني الآن.')
                 except:
                     st.error("تأكد من اتصالك بالإنترنت.")
