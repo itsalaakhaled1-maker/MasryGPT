@@ -89,10 +89,9 @@ if st.button("اكتشف الوصفات 🚀"):
                         res_text = res_text.replace('reasoning_content', '').replace('assistant', '')
 
                         # العرض النهائي الشيك
-                        st.markdown(f'<div class="ai-bubble">{res_text.strip()}</div>', unsafe_allow_html=True)
-                        # المطر الذهبي للوصفات العربية 🥘✨
+                        st.markdown(f'<div class="ai-bubble">{res_text.strip()}</div>', unsafe_allow_html=                        # مطر من جميع الأصناف العربية والعالمية 🥘🍖🍔
                         rain(
-                            emoji="🥘", # تقدر تغيره لـ 🍔 أو 🍗 براحتك
+                            emoji=["🥘", "🍖", "🍔", "🍗", "🥙", "🥩"], # حط كل اللي نفسك فيه هنا
                             font_size=54, 
                             falling_speed=3, 
                             animation_length="short"
