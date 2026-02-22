@@ -78,33 +78,21 @@ st.markdown("""
         transform: scale(0.95); /* ينضغط لجوه */
     }
 
-    /* --- الضربة القاضية لكل زوائد Streamlit المزعجة --- */
-    
-    /* 1. إخفاء الهيدر (الشريط العلوي) تماماً */
-    header, [data-testid="stHeader"] {
-        display: none !important;
-        height: 0 !important;
-    }
+     /* إخفاء القائمة العلوية وأيقونة المطور */
+    #MainMenu {visibility: hidden !important;}
+    [data-testid="stHeader"] {display: none !important;}
+    [data-testid="stDecoration"] {visibility: hidden !important;}
+    [data-testid="stToolbar"] {visibility: hidden !important;}
 
-    /* 2. إخفاء الفوتر (الشريط الأحمر "Hosted with Streamlit") */
-    footer, [data-testid="stFooter"] {
-        display: none !important;
-        height: 0 !important;
-    }
+    /* إخفاء زر Deploy / Manage app */
+    .stAppDeployButton {display: none !important;}
 
-    /* 3. إخفاء شريط الأدوات بالكامل (الزرار الأحمر وأيقونة المطور) */
-    [data-testid="stToolbar"], .stAppToolbar, .stAppDeployButton, .st-emotion-cache-18ni7ap {
-        display: none !important;
-    }
-
-    /* 4. إخفاء أي مساحات فاضية بيسيبها الشريط الممسوح */
-    .stApp > header { display: none !important; }
-    .main .block-container { padding-bottom: 0px !important; }
-    
-    /* 5. إخفاء أيقونة Manage App وتنسيقات الموبايل المزعجة */
-    button[title="Manage app"], [data-testid="stStatusWidget"] {
-        display: none !important;
-    }
+    /* الضربة القاضية للشريط الأحمر (Hosted with Streamlit) */
+    footer {visibility: hidden !important;}
+    [data-testid="stFooter"] {display: none !important;}
+    .viewerBadge_container {display: none !important;}
+    .viewerBadge_link {display: none !important;}
+    [data-testid="stViewerBadge"] {display: none !important;}
 
 
 </style>
