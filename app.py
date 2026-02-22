@@ -83,22 +83,29 @@ st.markdown("""
     /* 1. إخفاء الهيدر (الشريط العلوي) تماماً */
     header, [data-testid="stHeader"] {
         display: none !important;
+        height: 0 !important;
     }
 
     /* 2. إخفاء الفوتر (الشريط الأحمر "Hosted with Streamlit") */
-    footer, [data-testid="stFooter"], .st-emotion-cache-kn964b {
+    footer, [data-testid="stFooter"] {
         display: none !important;
-        height: 0px !important;
+        height: 0 !important;
     }
 
     /* 3. إخفاء شريط الأدوات بالكامل (الزرار الأحمر وأيقونة المطور) */
-    [data-testid="stToolbar"], .stAppToolbar, .stAppDeployButton {
+    [data-testid="stToolbar"], .stAppToolbar, .stAppDeployButton, .st-emotion-cache-18ni7ap {
         display: none !important;
     }
 
     /* 4. إخفاء أي مساحات فاضية بيسيبها الشريط الممسوح */
     .stApp > header { display: none !important; }
     .main .block-container { padding-bottom: 0px !important; }
+    
+    /* 5. إخفاء أيقونة Manage App وتنسيقات الموبايل المزعجة */
+    button[title="Manage app"], [data-testid="stStatusWidget"] {
+        display: none !important;
+    }
+
 
 </style>
 """, unsafe_allow_html=True)
