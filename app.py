@@ -78,6 +78,12 @@ st.markdown("""
         transform: scale(0.95); /* ينضغط لجوه */
     }
 
+        /* إخفاء قائمة المطورين والفوتر المزعج */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;} /* وده عشان يخفي الشريط اللي فوق لو ظهر */
+    .stAppDeployButton {display: none;} /* وده عشان يخفي زرار Manage App تحديداً */
+
 </style>
 """, unsafe_allow_html=True)
 
