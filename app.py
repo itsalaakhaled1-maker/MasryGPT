@@ -162,8 +162,4 @@ if st.button("أبهِر حماتك بالطبخة! 😉🥘"):
                 except:
                     st.error("مشكلة في الإنترنت.")
 
-    footer {display: none !important;}
-    [data-testid="stFooter"] {display: none !important;}
-    .st-emotion-cache-kn964b {display: none !important;} /* كود الموبايل الخاص */
-
-
+   
