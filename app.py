@@ -66,7 +66,7 @@ if st.button("اكتشف الوصفات 🚀"):
         st.warning("فضلاً، اكتب المكونات أولاً.")
     else:
         with chat_placeholder.container():
-            with st.spinner("جاري تنظيف الرد وتجهيز الأكلة... 🪄"):
+            with st.spinner("جاري ترويض الشيف.. ادعي يطلع أكلة عدلة! 🍳🧑‍🍳"):
                 try:
                     prompt = f"Recipes for {user_input}. Reply ONLY in Arabic. No JSON. No reasoning."
                     safe_prompt = urllib.parse.quote(prompt)
