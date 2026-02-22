@@ -78,17 +78,22 @@ st.markdown("""
         transform: scale(0.95); /* ينضغط لجوه */
     }
 
-    /* إخفاء شامل لكل أدوات المطورين والفوتر المزعج */
+    /* --- مسح شامل لكل الزوائد المزعجة --- */
+    
+    /* إخفاء الهيدر والفوتر والمنيو تماماً */
     header {display: none !important;}
     footer {display: none !important;}
     #MainMenu {display: none !important;}
-    .stAppDeployButton {display: none !important;}
-    [data-testid="stStatusWidget"] {display: none !important;}
-    .stAppToolbar {display: none !important;} /* لإخفاء شريط الأدوات بالكامل */
     
-    /* إخفاء أيقونة المطورين والزرار الأحمر */
-    div[data-testid="stToolbar"] {display: none !important;}
-    button[title="Manage app"] {display: none !important;}
+    /* إخفاء زرار Manage app والأيقونات اللي جنبه */
+    .stAppDeployButton {display: none !important;}
+    [data-testid="stToolbar"] {display: none !important;}
+    [data-testid="stDecoration"] {display: none !important;}
+    [data-testid="stStatusWidget"] {display: none !important;}
+    
+    /* إخفاء أي شريط أدوات إضافي بيظهر تحت */
+    .stAppToolbar {display: none !important;}
+    footer {display: none !important;}
 
 </style>
 """, unsafe_allow_html=True)
