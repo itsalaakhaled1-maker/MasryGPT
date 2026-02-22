@@ -88,14 +88,17 @@ if st.button("اكتشف الوصفات 🚀"):
                         res_text = re.sub(r'\{.*\}', '', res_text, flags=re.DOTALL)
                         res_text = res_text.replace('reasoning_content', '').replace('assistant', '')
 
-                        # العرض النهائي الشيك
-                        st.markdown(f'<div class="ai-bubble">{res_text.strip()}</div>', unsafe_allow_html=                        # مطر من جميع الأصناف العربية والعالمية 🥘🍖🍔
+                        # عرض الرد داخل الفقاعة الشيك
+                        st.markdown(f'<div class="ai-bubble">{res_text.strip()}</div>', unsafe_allow_html=True)
+                        
+                        # بوفيه المطر المفتوح 🥘🍖🍔
                         rain(
-                            emoji=["🥘", "🍖", "🍔", "🍗", "🥙", "🥩"], # حط كل اللي نفسك فيه هنا
+                            emoji=["🥘", "🍖", "🍔", "🍗", "🥙", "🥩"], 
                             font_size=54, 
                             falling_speed=3, 
                             animation_length="short"
                         )
+
                     else:
                         st.error("السيرفر زحمة.. جرب تضغط تاني.")
                 except:
