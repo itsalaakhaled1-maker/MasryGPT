@@ -3,6 +3,7 @@ import requests
 import urllib.parse
 import random
 import re
+from streamlit_extras.let_it_rain import rain
 
 st.set_page_config(page_title="شيف العرب AI", page_icon="🧑‍🍳", layout="centered")
 
@@ -89,7 +90,13 @@ if st.button("اكتشف الوصفات 🚀"):
 
                         # العرض النهائي الشيك
                         st.markdown(f'<div class="ai-bubble">{res_text.strip()}</div>', unsafe_allow_html=True)
-                        st.balloons()
+                        # المطر الذهبي للوصفات العربية 🥘✨
+                        rain(
+                            emoji="🥘", # تقدر تغيره لـ 🍔 أو 🍗 براحتك
+                            font_size=54, 
+                            falling_speed=3, 
+                            animation_length="short"
+                        )
                     else:
                         st.error("السيرفر زحمة.. جرب تضغط تاني.")
                 except:
