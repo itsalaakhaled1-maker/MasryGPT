@@ -49,11 +49,35 @@ st.markdown("""
         font-size: 1.2rem;
         box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
     }
-    .stButton>button:hover {
-        transform: translateY(-3px); /* رفعة بسيطة لما تقف عليه */
-        box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6);
-        color: white;
+    /* تصميم الزرار الأسطوري */
+    .stButton>button {
+        width: 100%;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); /* تدرج لوني فخم */
+        color: white !important;
+        border-radius: 15px; /* زوايا أنعم */
+        font-weight: 800;
+        height: 4em;
+        border: none;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* حركة مطاطية شيك */
+        box-shadow: 0 10px 20px -10px rgba(245, 158, 11, 0.5);
+        cursor: pointer;
     }
+
+    /* تأثير عند الوقوف بالماوس أو اللمس */
+    .stButton>button:hover {
+        transform: translateY(-5px); /* يرتفع لفوق سنة */
+        box-shadow: 0 15px 25px -5px rgba(245, 158, 11, 0.6);
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        color: white !important;
+    }
+
+    /* تأثير عند الضغط */
+    .stButton>button:active {
+        transform: scale(0.95); /* ينضغط لجوه */
+    }
+
 </style>
 """, unsafe_allow_html=True)
 
