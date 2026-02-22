@@ -38,7 +38,21 @@ st.markdown("""
     }
 
     .stButton>button {
-        width: 100%; background-color: #f59e0b; color: white; border-radius: 10px; font-weight: bold; height: 3.5em; border: none;
+        width: 100%;
+        background: linear-gradient(90deg, #f59e0b, #fbbf24); /* تدرج ذهبي */
+        color: white;
+        border-radius: 12px;
+        font-weight: bold;
+        height: 3.8em;
+        border: none;
+        transition: 0.3s ease-in-out;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    }
+    .stButton>button:hover {
+        transform: translateY(-3px); /* رفعة بسيطة لما تقف عليه */
+        box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6);
+        color: white;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -61,7 +75,7 @@ chat_placeholder = st.empty()
 
 user_input = st.text_input("ماذا يوجد في مطبخك؟", placeholder="مثلاً: بيض، جبنة، فول...")
 
-if st.button("اكتشف الوصفات 🚀"):
+if st.button("أبهِر حماتك بالطبخة! 😉🥘"):
     if not user_input.strip():
         st.warning("فضلاً، اكتب المكونات أولاً.")
     else:
